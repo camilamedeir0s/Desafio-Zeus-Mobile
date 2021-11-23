@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, Button } from "react-native";
+import { Text, TextInput, View, Button, Alert } from "react-native";
+import api from '../../services/Api'
 
 export default function Form(){
 
@@ -13,8 +14,14 @@ async function savePurchase(){
         quantity,
         price,
     }
-    const response = await api.post('/create', data)  
-}
+    try {
+        const response = await api.post('create', data);
+        Alert.alert('Cadastro realizado');
+
+
+    } catch (error) {
+        Alert.alert('Erro no cadastro. Tente novamente.');
+    }}
 
 
     return(
@@ -41,7 +48,7 @@ async function savePurchase(){
                     placeholder="R$"
                     keyboardType="numeric"
                 />
-                <Button onPress={() => savePurchase} title="Salvar"/>
+                <Button onPress={() => savePurchase()} title="Salvar"/>
             </View>
         </View>
 
